@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { LearningModule, Resource } from '@/types'
+import { Module, Resource } from '@/types'
 
 interface LearningPathProps {
-  modules: LearningModule[];
-  onModuleComplete: (moduleId: number) => void;
+  modules: Module[];
+  onModuleComplete: (moduleId: string) => void;
 }
 
 export default function LearningPath({ modules, onModuleComplete }: LearningPathProps) {
@@ -17,7 +17,7 @@ export default function LearningPath({ modules, onModuleComplete }: LearningPath
           <div 
             key={module.id}
             className={`p-4 border rounded-lg ${
-              module.completed ? 'bg-green-50 border-green-200' : 'border-gray-200'
+              module.status === 'completed' ? 'bg-green-50 border-green-200' : 'border-gray-200'
             }`}
           >
             <div className="flex items-center justify-between">
@@ -25,12 +25,12 @@ export default function LearningPath({ modules, onModuleComplete }: LearningPath
               <button
                 onClick={() => onModuleComplete(module.id)}
                 className={`px-3 py-1 rounded-md ${
-                  module.completed
+                  module.status === 'completed'
                     ? 'bg-green-500 text-white'
                     : 'bg-gray-200 text-gray-700'
                 }`}
               >
-                {module.completed ? 'Completed' : 'Mark Complete'}
+                {module.status === 'completed' ? 'Completed' : 'Mark Complete'}
               </button>
             </div>
             <p className="text-gray-600 mt-2">{module.description}</p>
@@ -48,7 +48,7 @@ export default function LearningPath({ modules, onModuleComplete }: LearningPath
                       {resource.title}
                     </a>
                     <span className="text-gray-500 text-sm ml-2">
-                      ({resource.type} - {resource.duration})
+                      ({resource.type}{resource.duration ? ` - ${resource.duration}min` : ''})
                     </span>
                   </li>
                 ))}
