@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { UserGoal } from '@/types'
+import { UserGoal, Module } from '@/types'
 import GoalForm from '@/components/GoalForm'
 import { useRouter } from 'next/navigation'
 import { mockApi } from '@/utils/mockData'
@@ -11,46 +11,48 @@ export default function CloudComputingPath() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
+  const modules: Module[] = [
+    {
+      id: 'cloud-1',
+      title: 'Cloud Fundamentals',
+      description: 'Understanding cloud concepts and services',
+      duration: '2 weeks',
+      status: 'not-started',
+      resources: []
+    },
+    {
+      id: 'cloud-2',
+      title: 'AWS Services',
+      description: 'Working with core AWS services',
+      duration: '4 weeks',
+      status: 'not-started',
+      resources: []
+    },
+    {
+      id: 'cloud-3',
+      title: 'Cloud Architecture',
+      description: 'Designing scalable cloud solutions',
+      duration: '3 weeks',
+      status: 'not-started',
+      resources: []
+    },
+    {
+      id: 'cloud-4',
+      title: 'Cloud Security',
+      description: 'Implementing cloud security best practices',
+      duration: '3 weeks',
+      status: 'not-started',
+      resources: []
+    }
+  ]
+
   const handleSubmit = async (goal: UserGoal) => {
     try {
       setLoading(true)
       const pathData = {
         ...goal,
         category: 'Cloud Computing',
-        modules: [
-          {
-            id: 'cloud-1',
-            title: 'Cloud Fundamentals',
-            description: 'Understanding cloud concepts and services',
-            duration: '2 weeks',
-            status: 'not-started',
-            resources: []
-          },
-          {
-            id: 'cloud-2',
-            title: 'AWS Services',
-            description: 'Working with core AWS services',
-            duration: '4 weeks',
-            status: 'not-started',
-            resources: []
-          },
-          {
-            id: 'cloud-3',
-            title: 'Cloud Architecture',
-            description: 'Designing scalable cloud solutions',
-            duration: '3 weeks',
-            status: 'not-started',
-            resources: []
-          },
-          {
-            id: 'cloud-4',
-            title: 'Cloud Security',
-            description: 'Implementing cloud security best practices',
-            duration: '3 weeks',
-            status: 'not-started',
-            resources: []
-          }
-        ]
+        modules: modules
       }
       
       await mockApi.createLearningPath(pathData)
