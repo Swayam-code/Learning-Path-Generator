@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import { LearningPath } from '@/types'
+import Link from 'next/link'
 
 interface PathListProps {
-  filter: string;
+  filter?: string;
 }
 
 export default function PathList({ filter }: PathListProps) {
@@ -13,54 +13,65 @@ export default function PathList({ filter }: PathListProps) {
     {
       id: '1',
       goal: 'Web Development',
+      description: 'Learn modern web development with React and Next.js',
       modules: [],
       totalHours: 40,
-      progress: 25
+      progress: 0,
+      difficulty: 'intermediate',
+      category: 'Web Development',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       id: '2',
       goal: 'Machine Learning',
+      description: 'Master machine learning fundamentals and applications',
       modules: [],
       totalHours: 60,
-      progress: 10
+      progress: 0,
+      difficulty: 'advanced',
+      category: 'Machine Learning',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       id: '3',
       goal: 'Mobile Development',
+      description: 'Build mobile apps with React Native and Flutter',
       modules: [],
       totalHours: 45,
-      progress: 100
+      progress: 0,
+      difficulty: 'beginner',
+      category: 'Mobile Development',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
   ])
 
-  const filteredPaths = paths.filter(path => {
-    if (filter === 'completed') return path.progress === 100
-    if (filter === 'in-progress') return path.progress > 0 && path.progress < 100
-    if (filter === 'not-started') return path.progress === 0
-    return true
-  })
+  const filteredPaths = filter
+    ? paths.filter((path) => path.category.toLowerCase().includes(filter.toLowerCase()))
+    : paths
 
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {filteredPaths.map((path) => (
-        <Link
+        <Link 
           key={path.id}
           href={`/path/${path.id}`}
-          className="block bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          className="block"
         >
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="text-lg font-medium">{path.goal}</h3>
-              <p className="text-sm text-gray-500">{path.totalHours} hours total</p>
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <h3 className="text-xl font-semibold mb-2">{path.goal}</h3>
+            <p className="text-gray-600 mb-4">{path.description}</p>
+            <div className="flex justify-between items-center text-sm text-gray-500">
+              <span>{path.totalHours} hours</span>
+              <span className="capitalize">{path.difficulty}</span>
             </div>
-            <div className="flex items-center">
-              <div className="w-32 bg-gray-200 rounded-full h-2 mr-2">
-                <div 
-                  className="bg-blue-500 rounded-full h-2" 
-                  style={{ width: `${path.progress}%` }}
-                />
-              </div>
-              <span className="text-sm text-gray-600">{path.progress}%</span>
+            <div className="mt-4 bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-blue-500 h-2 rounded-full"
+                style={{ width: `${path.progress}%` }}
+              />
             </div>
           </div>
         </Link>
