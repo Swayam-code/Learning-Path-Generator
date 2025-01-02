@@ -1,0 +1,68 @@
+version: 1.0
+name: learning-path-generator
+description: Development workspace for Learning Path Generator
+
+workspaceFolder: /workspace
+defaultIde: vscode
+
+tasks:
+  - name: Setup Development Environment
+    init: |
+      chmod +x scripts/daytona-setup.sh
+      ./scripts/daytona-setup.sh
+    command: npm run dev
+
+  - name: Install Dependencies
+    init: npm install
+    command: echo "Dependencies installed successfully!"
+
+  - name: Build Project
+    init: npm run build
+    command: echo "Project built successfully!"
+
+  - name: Type Check
+    command: npm run type-check
+
+  - name: Lint
+    command: npm run lint
+
+  - name: Format Code
+    command: npm run format
+
+ports:
+  - port: 3000
+    onOpen: open-browser
+    visibility: public
+    name: Next.js App
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - bradlc.vscode-tailwindcss
+    - ms-vscode.vscode-typescript-next
+    - dsznajder.es7-react-js-snippets
+    - formulahendry.auto-rename-tag
+    - christian-kohler.path-intellisense
+    - eamodio.gitlens
+    - github.copilot
+    - github.vscode-pull-request-github
+    - ms-azuretools.vscode-docker
+
+  settings:
+    "editor.formatOnSave": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.enablePromptUseWorkspaceTsdk": true
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+    "tailwindCSS.experimental.classRegex": [
+      ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+    ]

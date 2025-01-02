@@ -1,0 +1,69 @@
+version: 1.0
+name: learning-path-generator
+description: A personalized learning path generator built with Next.js and TypeScript
+
+builder:
+  type: devcontainer
+  devcontainer:
+    path: .devcontainer/devcontainer.json
+
+ports:
+  - name: next-dev-server
+    port: 3000
+    description: Next.js Development Server
+    onOpen: open-browser
+    visibility: public
+
+ide:
+  type: vscode
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - bradlc.vscode-tailwindcss
+    - ms-vscode.vscode-typescript-next
+    - dsznajder.es7-react-js-snippets
+    - formulahendry.auto-rename-tag
+    - christian-kohler.path-intellisense
+    - eamodio.gitlens
+    - github.copilot
+    - github.vscode-pull-request-github
+    - ms-azuretools.vscode-docker
+
+resources:
+  memory: 8Gi
+  cpu: 4
+  storage: 20Gi
+
+git:
+  provider: github
+  remotes:
+    - origin
+
+features:
+  - type: docker
+    version: latest
+  - type: github-cli
+    version: latest
+  - type: node
+    version: 20.x
+
+tasks:
+  - name: Install Dependencies
+    init: npm install
+    command: echo "Dependencies installed successfully!"
+
+  - name: Setup Development Environment
+    init: |
+      chmod +x scripts/daytona-setup.sh
+      ./scripts/daytona-setup.sh
+    command: npm run dev
+
+events:
+  - name: on-start
+    command: |
+      echo " Development environment is ready!"
+      echo " Next.js app is running on http://localhost:3000"
+
+  - name: on-stop
+    command: |
+      echo " Shutting down development environment..."
