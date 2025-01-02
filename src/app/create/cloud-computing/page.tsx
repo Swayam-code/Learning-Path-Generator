@@ -19,24 +19,36 @@ export default function CloudComputingPath() {
         category: 'Cloud Computing',
         modules: [
           {
+            id: 'cloud-1',
             title: 'Cloud Fundamentals',
             description: 'Understanding cloud concepts and services',
-            duration: '2 weeks'
+            duration: '2 weeks',
+            status: 'not-started',
+            resources: []
           },
           {
+            id: 'cloud-2',
             title: 'AWS Services',
             description: 'Working with core AWS services',
-            duration: '4 weeks'
+            duration: '4 weeks',
+            status: 'not-started',
+            resources: []
           },
           {
+            id: 'cloud-3',
             title: 'Cloud Architecture',
             description: 'Designing scalable cloud solutions',
-            duration: '3 weeks'
+            duration: '3 weeks',
+            status: 'not-started',
+            resources: []
           },
           {
+            id: 'cloud-4',
             title: 'Cloud Security',
             description: 'Implementing cloud security best practices',
-            duration: '3 weeks'
+            duration: '3 weeks',
+            status: 'not-started',
+            resources: []
           }
         ]
       }
